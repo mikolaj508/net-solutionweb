@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Neomorphism palette based on #26282B */
+    --background: 216 6% 16%;
+    --foreground: 0 0% 95%;
+
+    --card: 216 6% 18%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 216 6% 18%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 0 0% 90%;
+    --primary-foreground: 216 6% 16%;
+
+    --secondary: 216 6% 22%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 216 6% 25%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 216 6% 30%;
+    --accent-foreground: 0 0% 95%;
+
+    --destructive: 0 60% 50%;
+    --destructive-foreground: 0 0% 95%;
+
+    --border: 216 6% 28%;
+    --input: 216 6% 20%;
+    --ring: 0 0% 70%;
+
+    --radius: 1rem;
+
+    /* Neomorphism tokens */
+    --neo-bg: 216 6% 16%;
+    --neo-light: 216 6% 22%;
+    --neo-dark: 216 6% 10%;
+    --neo-shadow-light: hsl(216 6% 22% / 0.5);
+    --neo-shadow-dark: hsl(216 6% 8% / 0.8);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  /* Neomorphism Card */
+  .neo-card {
+    @apply relative rounded-2xl;
+    background: hsl(var(--card));
+    box-shadow: 
+      8px 8px 16px hsl(216 6% 8% / 0.6),
+      -8px -8px 16px hsl(216 6% 24% / 0.3);
+  }
+
+  .neo-card-inset {
+    @apply relative rounded-2xl;
+    background: hsl(var(--card));
+    box-shadow: 
+      inset 4px 4px 8px hsl(216 6% 8% / 0.5),
+      inset -4px -4px 8px hsl(216 6% 24% / 0.2);
+  }
+
+  .neo-button {
+    @apply relative rounded-xl px-6 py-3 font-medium transition-all duration-300;
+    background: hsl(var(--card));
+    box-shadow: 
+      6px 6px 12px hsl(216 6% 8% / 0.6),
+      -6px -6px 12px hsl(216 6% 24% / 0.3);
+  }
+
+  .neo-button:hover {
+    box-shadow: 
+      4px 4px 8px hsl(216 6% 8% / 0.6),
+      -4px -4px 8px hsl(216 6% 24% / 0.3);
+  }
+
+  .neo-button:active {
+    box-shadow: 
+      inset 4px 4px 8px hsl(216 6% 8% / 0.5),
+      inset -4px -4px 8px hsl(216 6% 24% / 0.2);
+  }
+
+  /* Glass effect for transparent nav */
+  .glass-nav {
+    background: hsl(216 6% 16% / 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid hsl(216 6% 30% / 0.3);
+  }
+
+  /* Section styling */
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Card hover */
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+      12px 12px 24px hsl(216 6% 8% / 0.7),
+      -12px -12px 24px hsl(216 6% 24% / 0.35);
+  }
+
+  /* Floating animation */
+  .float {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .float-delayed {
+    animation: float 8s ease-in-out infinite;
+    animation-delay: 3s;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Keyframes */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
