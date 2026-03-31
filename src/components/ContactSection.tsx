@@ -1,170 +1,144 @@
-import React, { useState } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { motion } from 'framer-motion';
-import { Send, User, Mail, MessageSquare } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Mail, Phone, ArrowRight, Send } from "lucide-react";
+import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-const ContactSection: React.FC = () => {
+export const ContactSection = () => {
   const { t } = useLanguage();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    setIsSubmitting(false);
-    setSubmitted(true);
-    setFormData({ name: '', email: '', message: '' });
-    
-    // Reset success message after 5 seconds
-    setTimeout(() => setSubmitted(false), 5000);
+    // Build mailto link as fallback
+    const subject = encodeURIComponent(`Wiadomość od ${form.name}`);
+    const body = encodeURIComponent(`Imię: ${form.name}\nEmail: ${form.email}\nTelefon: ${form.phone}\n\n${form.message}`);
+    window.location.href = `mailto:kontakt@netsolution.pl?subject=${subject}&body=${body}`;
   };
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden">
-      <div className="section-container relative">
+    <section id="kontakt" className="section-padding relative">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
+      <div className="container mx-auto max-w-2xl relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-foreground">
-            {t('cta.title')}
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
+            {t.contactTitle}<br /><span className="text-gradient">{t.contactHighlight}</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            {t('cta.desc')}
-          </p>
+          <p className="text-muted-foreground">{t.contactSub}</p>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+        <motion.form
+          onSubmit={handleSubmit}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-2xl mx-auto"
+          transition={{ delay: 0.1 }}
+          className="glass-strong rounded-2xl p-6 md:p-8 space-y-4 mb-6"
         >
-          <div className="neo-card rounded-2xl p-8 sm:p-10">
-            {submitted ? (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-center py-8"
-              >
-                <div className="w-16 h-16 mx-auto mb-4 neo-card rounded-full flex items-center justify-center">
-                  <Send className="w-8 h-8 text-foreground" />
-                </div>
-                <h3 className="font-display text-xl font-semibold text-foreground mb-2">
-                  {t('contact.success')}
-                </h3>
-                <p className="text-muted-foreground">
-                  {t('contact.success.desc')}
-                </p>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Name field */}
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-                    {t('contact.name')}
-                  </label>
-                  <div className="relative">
-                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
-                      <User className="w-5 h-5" />
-                    </div>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="w-full pl-12 pr-4 py-3 neo-card-inset rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none transition-colors"
-                      placeholder={t('contact.name.placeholder')}
-                    />
-                  </div>
-                </div>
-
-                {/* Email field */}
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                    {t('contact.email')}
-                  </label>
-                  <div className="relative">
-                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
-                      <Mail className="w-5 h-5" />
-                    </div>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full pl-12 pr-4 py-3 neo-card-inset rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none transition-colors"
-                      placeholder={t('contact.email.placeholder')}
-                    />
-                  </div>
-                </div>
-
-                {/* Message field */}
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
-                    {t('contact.message')}
-                  </label>
-                  <div className="relative">
-                    <div className="absolute left-4 top-4 text-muted-foreground">
-                      <MessageSquare className="w-5 h-5" />
-                    </div>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      rows={5}
-                      className="w-full pl-12 pr-4 py-3 neo-card-inset rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none transition-colors resize-none"
-                      placeholder={t('contact.message.placeholder')}
-                    />
-                  </div>
-                </div>
-
-                {/* Submit button */}
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-4 neo-button text-foreground font-semibold transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                >
-                  {isSubmitting ? (
-                    <div className="w-5 h-5 border-2 border-foreground/30 border-t-foreground rounded-full animate-spin" />
-                  ) : (
-                    <>
-                      {t('cta.button')}
-                      <Send className="w-5 h-5" />
-                    </>
-                  )}
-                </button>
-              </form>
-            )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="text-sm text-muted-foreground mb-1.5 block">{t.contactName}</label>
+              <input
+                type="text"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                placeholder={t.contactNamePh}
+                required
+                className="w-full px-4 py-3 rounded-xl bg-background/50 border border-border/50 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 transition-all text-sm"
+              />
+            </div>
+            <div>
+              <label className="text-sm text-muted-foreground mb-1.5 block">{t.contactEmail}</label>
+              <input
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                placeholder={t.contactEmailPh}
+                required
+                className="w-full px-4 py-3 rounded-xl bg-background/50 border border-border/50 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 transition-all text-sm"
+              />
+            </div>
           </div>
+          <div>
+            <label className="text-sm text-muted-foreground mb-1.5 block">{t.contactPhone}</label>
+            <input
+              type="tel"
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
+              placeholder={t.contactPhonePh}
+              className="w-full px-4 py-3 rounded-xl bg-background/50 border border-border/50 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 transition-all text-sm"
+            />
+          </div>
+          <div>
+            <label className="text-sm text-muted-foreground mb-1.5 block">{t.contactMessage}</label>
+            <textarea
+              name="message"
+              value={form.message}
+              onChange={handleChange}
+              placeholder={t.contactMessagePh}
+              required
+              rows={4}
+              className="w-full px-4 py-3 rounded-xl bg-background/50 border border-border/50 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 transition-all text-sm resize-none"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-primary to-accent text-primary-foreground font-medium flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
+          >
+            <Send size={16} />
+            {t.contactSend}
+          </button>
+        </motion.form>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="space-y-3"
+        >
+          <p className="text-center text-xs text-muted-foreground mb-3">{t.contactOr}</p>
+          <a
+            href="mailto:kontakt@netsolution.pl"
+            className="glass-card flex items-center gap-4 group hover:border-primary/40 transition-all"
+          >
+            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+              <Mail size={18} />
+            </div>
+            <div className="flex-1">
+              <div className="text-xs text-muted-foreground">Email</div>
+              <div className="font-display font-medium text-foreground text-sm">kontakt@netsolution.pl</div>
+            </div>
+            <ArrowRight size={16} className="text-muted-foreground group-hover:text-primary transition-colors" />
+          </a>
+          <a
+            href="tel:+48000000000"
+            className="glass-card flex items-center gap-4 group hover:border-primary/40 transition-all"
+          >
+            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+              <Phone size={18} />
+            </div>
+            <div className="flex-1">
+              <div className="text-xs text-muted-foreground">{t.contactPhone}</div>
+              <div className="font-display font-medium text-foreground text-sm">+48 000 000 000</div>
+            </div>
+            <ArrowRight size={16} className="text-muted-foreground group-hover:text-primary transition-colors" />
+          </a>
         </motion.div>
       </div>
     </section>
   );
 };
 
-export default ContactSection;
+

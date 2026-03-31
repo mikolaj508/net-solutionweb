@@ -1,28 +1,35 @@
-import React from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from "@/contexts/LanguageContext";
 
-const Footer: React.FC = () => {
+export const Footer = () => {
   const { t } = useLanguage();
-  const currentYear = new Date().getFullYear();
+
+  const links = [
+    { label: t.navServices, href: "#uslugi" },
+    { label: t.navHow, href: "#jak-pracuje" },
+    { label: t.navAbout, href: "#o-mnie" },
+    { label: t.navContact, href: "#kontakt" },
+  ];
 
   return (
-    <footer className="py-8 border-t border-border/30">
-      <div className="section-container">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 neo-card flex items-center justify-center">
-              <span className="text-foreground font-display font-bold text-sm">N</span>
-            </div>
-            <span className="font-display font-semibold text-foreground">Net-Solution</span>
+    <footer className="border-t border-border/50 py-8 px-6">
+      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded-md bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+            <span className="text-primary-foreground font-display font-bold text-[10px]">NS</span>
           </div>
-
-          <p className="text-muted-foreground text-sm">
-            © {currentYear} Net-Solution. {t('footer.rights')}
-          </p>
+          <span className="text-sm text-muted-foreground">
+            {t.footerRights.replace("{year}", new Date().getFullYear().toString())}
+          </span>
+        </div>
+        <div className="flex gap-6">
+          {links.map((l) => (
+            <a key={l.href} href={l.href} className="text-xs text-muted-foreground hover:text-primary transition-colors">
+              {l.label}
+            </a>
+          ))}
         </div>
       </div>
     </footer>
   );
 };
 
-export default Footer;

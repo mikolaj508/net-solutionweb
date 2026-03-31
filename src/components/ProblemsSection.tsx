@@ -1,93 +1,39 @@
-import React from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { motion } from 'framer-motion';
-import { AlertCircle, CheckCircle2 } from 'lucide-react';
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { WifiOff, EyeOff, FileSpreadsheet, MousePointerClick } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-const ProblemsSection: React.FC = () => {
+export const ProblemsSection = () => {
   const { t } = useLanguage();
 
   const problems = [
-    {
-      problem: t('problem1.title'),
-      problemDesc: t('problem1.desc'),
-      solution: t('solution1'),
-    },
-    {
-      problem: t('problem2.title'),
-      problemDesc: t('problem2.desc'),
-      solution: t('solution2'),
-    },
-    {
-      problem: t('problem3.title'),
-      problemDesc: t('problem3.desc'),
-      solution: t('solution3'),
-    },
+    { icon: <WifiOff size={22} />, problem: t.prob1, detail: t.prob1d, solution: t.prob1s },
+    { icon: <EyeOff size={22} />, problem: t.prob2, detail: t.prob2d, solution: t.prob2s },
+    { icon: <FileSpreadsheet size={22} />, problem: t.prob3, detail: t.prob3d, solution: t.prob3s },
+    { icon: <MousePointerClick size={22} />, problem: t.prob4, detail: t.prob4d, solution: t.prob4s },
   ];
 
   return (
-    <section id="problems" className="py-24 relative">
-      <div className="section-container relative">
+    <section id="problemy" className="section-padding relative">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/3 rounded-full blur-3xl" />
+      <div className="container mx-auto relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          
           className="text-center mb-16"
         >
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-foreground">
-            {t('problems.title')}
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
+            {t.probTitle1}<br />
+            <span className="text-gradient">{t.probHighlight}</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            {t('problems.subtitle')}
-          </p>
+          <p className="text-muted-foreground max-w-xl mx-auto">{t.probSub}</p>
         </motion.div>
 
-        <div className="space-y-8">
-          {problems.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              className="neo-card rounded-2xl p-6 sm:p-8"
-            >
-              <div className="grid md:grid-cols-2 gap-6">
-                {/* Problem */}
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 neo-card-inset rounded-xl flex items-center justify-center flex-shrink-0">
-                      <AlertCircle className="w-5 h-5 text-destructive/70" />
-                    </div>
-                    <div>
-                      <h3 className="font-display text-lg font-semibold text-foreground mb-2">
-                        {item.problem}
-                      </h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed">
-                        {item.problemDesc}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Solution */}
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 neo-card rounded-xl flex items-center justify-center flex-shrink-0">
-                      <CheckCircle2 className="w-5 h-5 text-foreground/70" />
-                    </div>
-                    <div>
-                      <h4 className="font-display text-sm font-medium text-foreground/70 mb-2">
-                        {t('language') === 'en' ? 'Solution' : 'Rozwiązanie'}
-                      </h4>
-                      <p className="text-foreground text-sm leading-relaxed">
-                        {item.solution}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {problems.map((item, i) => (
+            <ProblemCard key={i} item={item} index={i} solutionLabel={t.solutionLabel} />
           ))}
         </div>
       </div>
@@ -95,4 +41,29 @@ const ProblemsSection: React.FC = () => {
   );
 };
 
-export default ProblemsSection;
+const ProblemCard = ({ item, index, solutionLabel }: { item: { icon: React.ReactNode; problem: string; detail: string; solution: string }; index: number; solutionLabel: string }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      className="glass-card"
+    >
+      <div className="w-10 h-10 rounded-xl bg-destructive/10 flex items-center justify-center text-destructive mb-4">
+        {item.icon}
+      </div>
+      <h3 className="font-display font-semibold text-foreground mb-2">{item.problem}</h3>
+      <p className="text-sm text-muted-foreground mb-4">{item.detail}</p>
+      <div className="border-t border-border/50 pt-4">
+        <span className="text-xs font-medium text-primary uppercase tracking-wider">{solutionLabel}</span>
+        <p className="text-sm text-secondary-foreground mt-1">{item.solution}</p>
+      </div>
+    </motion.div>
+  );
+};
+
+

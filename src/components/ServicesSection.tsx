@@ -1,59 +1,51 @@
-import React from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { motion } from 'framer-motion';
-import { Globe, Zap, FileText, Layers, Code2, RefreshCw } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Wifi, Shield, Boxes, Globe, Puzzle, Wrench } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-const ServicesSection: React.FC = () => {
+export const ServicesSection = () => {
   const { t } = useLanguage();
 
   const services = [
-    { icon: Globe, title: t('service1.title'), desc: t('service1.desc') },
-    { icon: Zap, title: t('service2.title'), desc: t('service2.desc') },
-    { icon: FileText, title: t('service3.title'), desc: t('service3.desc') },
-    { icon: Layers, title: t('service4.title'), desc: t('service4.desc') },
-    { icon: Code2, title: t('service5.title'), desc: t('service5.desc') },
-    { icon: RefreshCw, title: t('service6.title'), desc: t('service6.desc') },
+    { icon: <Wifi size={22} />, title: t.srv1, desc: t.srv1d },
+    { icon: <Shield size={22} />, title: t.srv2, desc: t.srv2d },
+    { icon: <Boxes size={22} />, title: t.srv3, desc: t.srv3d },
+    { icon: <Globe size={22} />, title: t.srv4, desc: t.srv4d },
+    { icon: <Puzzle size={22} />, title: t.srv5, desc: t.srv5d },
+    { icon: <Wrench size={22} />, title: t.srv6, desc: t.srv6d },
   ];
 
   return (
-    <section id="services" className="py-24 relative">
-      <div className="section-container relative">
+    <section id="uslugi" className="section-padding relative">
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary/3 rounded-full blur-3xl" />
+      <div className="container mx-auto relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+
           className="text-center mb-16"
         >
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-foreground">
-            {t('services.title')}
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
+            {t.srvTitle} <span className="text-gradient">{t.srvHighlight}</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            {t('services.subtitle')}
-          </p>
+          
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {services.map((s, i) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group neo-card card-hover rounded-2xl p-6 relative overflow-hidden"
+              transition={{ delay: i * 0.08 }}
+              className="glass-card group"
             >
-              <div className="relative">
-                <div className="w-12 h-12 mb-5 neo-card-inset rounded-xl flex items-center justify-center">
-                  <service.icon className="w-6 h-6 text-foreground/70" />
-                </div>
-                <h3 className="font-display text-xl font-semibold text-foreground mb-3">
-                  {service.title}
-                </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {service.desc}
-                </p>
+              <div className="w-11 h-11 rounded-xl bg-primary/10 group-hover:bg-primary/20 flex items-center justify-center text-primary mb-4 transition-colors duration-300">
+                {s.icon}
               </div>
+              <h3 className="font-display font-semibold text-foreground mb-2">{s.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -62,4 +54,4 @@ const ServicesSection: React.FC = () => {
   );
 };
 
-export default ServicesSection;
+

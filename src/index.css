@@ -1,46 +1,96 @@
+/* SF Pro system font stack — no external import needed */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* Neomorphism palette based on #26282B */
-    --background: 216 6% 16%;
-    --foreground: 0 0% 95%;
+    --background: 220 25% 8%;
+    --foreground: 210 40% 96%;
 
-    --card: 216 6% 18%;
-    --card-foreground: 0 0% 95%;
+    --card: 220 20% 14%;
+    --card-foreground: 210 40% 96%;
 
-    --popover: 216 6% 18%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 220 20% 14%;
+    --popover-foreground: 210 40% 96%;
 
-    --primary: 0 0% 90%;
-    --primary-foreground: 216 6% 16%;
+    --primary: 190 80% 50%;
+    --primary-foreground: 220 25% 8%;
 
-    --secondary: 216 6% 22%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 220 20% 18%;
+    --secondary-foreground: 210 40% 90%;
 
-    --muted: 216 6% 25%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 220 15% 20%;
+    --muted-foreground: 215 15% 55%;
 
-    --accent: 216 6% 30%;
-    --accent-foreground: 0 0% 95%;
+    --accent: 260 60% 60%;
+    --accent-foreground: 210 40% 96%;
 
-    --destructive: 0 60% 50%;
-    --destructive-foreground: 0 0% 95%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 216 6% 28%;
-    --input: 216 6% 20%;
-    --ring: 0 0% 70%;
+    --border: 220 15% 22%;
+    --input: 220 15% 22%;
+    --ring: 190 80% 50%;
 
     --radius: 1rem;
 
-    /* Neomorphism tokens */
-    --neo-bg: 216 6% 16%;
-    --neo-light: 216 6% 22%;
-    --neo-dark: 216 6% 10%;
-    --neo-shadow-light: hsl(216 6% 22% / 0.5);
-    --neo-shadow-dark: hsl(216 6% 8% / 0.8);
+    --glass-bg: 220 20% 14%;
+    --glass-border: 220 15% 28%;
+    --glass-highlight: 190 80% 50%;
+
+    --sidebar-background: 220 25% 10%;
+    --sidebar-foreground: 210 40% 96%;
+    --sidebar-primary: 190 80% 50%;
+    --sidebar-primary-foreground: 220 25% 8%;
+    --sidebar-accent: 220 20% 18%;
+    --sidebar-accent-foreground: 210 40% 96%;
+    --sidebar-border: 220 15% 22%;
+    --sidebar-ring: 190 80% 50%;
+  }
+
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 220 15% 15%;
+
+    --card: 220 10% 97%;
+    --card-foreground: 220 15% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 15%;
+
+    --primary: 190 80% 42%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 10% 93%;
+    --secondary-foreground: 220 15% 25%;
+
+    --muted: 220 10% 94%;
+    --muted-foreground: 220 10% 45%;
+
+    --accent: 260 55% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 10% 88%;
+    --input: 220 10% 88%;
+    --ring: 190 80% 42%;
+
+    --glass-bg: 220 10% 97%;
+    --glass-border: 220 10% 82%;
+    --glass-highlight: 190 80% 42%;
+
+    --sidebar-background: 220 10% 96%;
+    --sidebar-foreground: 220 15% 15%;
+    --sidebar-primary: 190 80% 42%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 10% 93%;
+    --sidebar-accent-foreground: 220 15% 15%;
+    --sidebar-border: 220 10% 88%;
+    --sidebar-ring: 190 80% 42%;
   }
 }
 
@@ -49,124 +99,88 @@
     @apply border-border;
   }
 
-  html {
-    scroll-behavior: smooth;
-  }
-
   body {
-    @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
+    @apply bg-background text-foreground font-body antialiased;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', system-ui, sans-serif;
+    @apply font-display;
   }
 }
 
 @layer components {
-  /* Neomorphism Card */
-  .neo-card {
-    @apply relative rounded-2xl;
-    background: hsl(var(--card));
-    box-shadow: 
-      8px 8px 16px hsl(216 6% 8% / 0.6),
-      -8px -8px 16px hsl(216 6% 24% / 0.3);
+  .glass {
+    @apply bg-glass/40 backdrop-blur-xl border border-glass-border/30 shadow-lg;
   }
 
-  .neo-card-inset {
-    @apply relative rounded-2xl;
-    background: hsl(var(--card));
-    box-shadow: 
-      inset 4px 4px 8px hsl(216 6% 8% / 0.5),
-      inset -4px -4px 8px hsl(216 6% 24% / 0.2);
+  .glass-subtle {
+    @apply bg-glass/20 backdrop-blur-md border border-glass-border/20;
   }
 
-  .neo-button {
-    @apply relative rounded-xl px-6 py-3 font-medium transition-all duration-300;
-    background: hsl(var(--card));
-    box-shadow: 
-      6px 6px 12px hsl(216 6% 8% / 0.6),
-      -6px -6px 12px hsl(216 6% 24% / 0.3);
+  .glass-strong {
+    @apply bg-glass/60 backdrop-blur-2xl border border-glass-border/40 shadow-xl;
   }
 
-  .neo-button:hover {
-    box-shadow: 
-      4px 4px 8px hsl(216 6% 8% / 0.6),
-      -4px -4px 8px hsl(216 6% 24% / 0.3);
+  .glass-card {
+    @apply glass rounded-2xl p-6 transition-all duration-500;
   }
 
-  .neo-button:active {
-    box-shadow: 
-      inset 4px 4px 8px hsl(216 6% 8% / 0.5),
-      inset -4px -4px 8px hsl(216 6% 24% / 0.2);
+  .glass-card:hover {
+    @apply bg-glass/50 border-primary/30 shadow-primary/10 shadow-2xl;
   }
 
-  /* Glass effect for transparent nav */
-  .glass-nav {
-    background: hsl(216 6% 16% / 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid hsl(216 6% 30% / 0.3);
+  .glow-primary {
+    box-shadow: 0 0 40px -10px hsl(var(--primary) / 0.3);
   }
 
-  /* Section styling */
-  .section-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  .glow-accent {
+    box-shadow: 0 0 40px -10px hsl(var(--accent) / 0.3);
   }
 
-  /* Card hover */
-  .card-hover {
-    @apply transition-all duration-300;
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
   }
 
-  .card-hover:hover {
-    transform: translateY(-4px);
-    box-shadow: 
-      12px 12px 24px hsl(216 6% 8% / 0.7),
-      -12px -12px 24px hsl(216 6% 24% / 0.35);
-  }
-
-  /* Floating animation */
-  .float {
-    animation: float 8s ease-in-out infinite;
-  }
-
-  .float-delayed {
-    animation: float 8s ease-in-out infinite;
-    animation-delay: 3s;
+  .section-padding {
+    @apply py-24 md:py-32 px-6 md:px-8;
   }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-slow {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .animate-pulse-soft {
+    animation: pulse-soft 3s ease-in-out infinite;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
   }
 }
 
-/* Keyframes */
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 8px;
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
-::-webkit-scrollbar-track {
-  background: hsl(var(--background));
+@keyframes glow {
+  from { box-shadow: 0 0 20px -10px hsl(var(--primary) / 0.3); }
+  to { box-shadow: 0 0 40px -5px hsl(var(--primary) / 0.5); }
 }
 
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted));
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground));
+@keyframes codeScroll {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
 }

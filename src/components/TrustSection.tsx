@@ -1,57 +1,52 @@
-import React from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { motion } from 'framer-motion';
-import { Heart, Puzzle, HeadphonesIcon } from 'lucide-react';
+import { motion } from "framer-motion";
+import { ArrowRight, User } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-const TrustSection: React.FC = () => {
+export const TrustSection = () => {
   const { t } = useLanguage();
 
-  const reasons = [
-    { icon: Heart, title: t('trust1.title'), desc: t('trust1.desc') },
-    { icon: Puzzle, title: t('trust2.title'), desc: t('trust2.desc') },
-    { icon: HeadphonesIcon, title: t('trust3.title'), desc: t('trust3.desc') },
-  ];
-
+  
   return (
-    <section id="trust" className="py-24 relative">
-      <div className="section-container relative">
+    <section id="o-mnie" className="section-padding relative">
+      <div className="container mx-auto max-w-3xl">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="glass-strong rounded-3xl p-8 md:p-12"
         >
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-foreground">
-            {t('trust.title')}
-          </h2>
-        </motion.div>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {reasons.map((reason, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              className="neo-card card-hover rounded-2xl p-8 text-center"
-            >
-              <div className="w-16 h-16 mx-auto mb-6 neo-card rounded-2xl flex items-center justify-center">
-                <reason.icon className="w-8 h-8 text-foreground" />
+          <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+            {/* Photo placeholder */}
+            <div className="shrink-0">
+              <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 border border-border/50 flex items-center justify-center overflow-hidden">
+                <User size={48} className="text-muted-foreground" />
               </div>
-              <h3 className="font-display text-xl font-semibold text-foreground mb-4">
-                {reason.title}
-              </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                {reason.desc}
-              </p>
-            </motion.div>
-          ))}
-        </div>
+            </div>
+
+            <div className="text-center md:text-left flex-1">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-4 mx-auto md:mx-0">
+                <span className="text-primary-foreground font-display font-bold text-base">NS</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-6">
+                {t.trustTitle} <span className="text-gradient">{t.trustHighlight}</span>
+              </h2>
+              <p className="text-muted-foreground leading-relaxed mb-4">{t.trustP1}</p>
+              <p className="text-muted-foreground leading-relaxed mb-4">{t.trustP2}</p>
+              <p className="text-muted-foreground leading-relaxed mb-6">{t.trustP3}</p>
+
+              <a
+                href="#kontakt"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary/10 border border-primary/30 text-primary font-medium hover:bg-primary/20 transition-all duration-300 group"
+              >
+                {t.trustCta}
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </a>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
 };
 
-export default TrustSection;
+
