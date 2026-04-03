@@ -10,6 +10,7 @@ const translations = {
     navAbout: "O mnie",
     navContact: "Kontakt",
     navCta: "Napisz do mnie",
+
     // Hero
     heroTitle1: "Technologia i ",
     heroHighlight: "bezpieczeństwo",
@@ -23,6 +24,7 @@ const translations = {
     cardMicroDesc: "Proste narzędzia zamiast skomplikowanych arkuszy.",
     cardWeb: "Strony WWW",
     cardWebDesc: "Nowoczesne strony prezentujące Twoją ofertę.",
+
     // Problems
     probTitle1: "Pomagam tam, gdzie technologia",
     probHighlight: "zaczyna przeszkadzać",
@@ -40,6 +42,7 @@ const translations = {
     prob4d: "Użytkownik odwiedza stronę, ale nie rozumie szybko, czym zajmuje się firma i jak wykonać kolejny krok.",
     prob4s: "Tworzę strony, które porządkują komunikację, wzmacniają wiarygodność i ułatwiają kontakt.",
     solutionLabel: "Rozwiązanie",
+
     // Services
     srvTitle: "Czym mogę",
     srvHighlight: "pomóc",
@@ -55,6 +58,7 @@ const translations = {
     srv5d: "Gdy gotowe narzędzia nie wystarczają — projektuję rozwiązanie odpowiadające konkretnym potrzebom.",
     srv6: "Wsparcie i rozwój",
     srv6d: "Aktualizacje, poprawki, rozbudowa i techniczne wsparcie po wdrożeniu.",
+
     // How I Work
     howTitle: "Jak",
     howHighlight: "pracuję",
@@ -67,13 +71,15 @@ const translations = {
     how3d: "Rozwiązanie ma działać pewnie, być czytelne w obsłudze i wspierać pracę.",
     how4: "Wsparcie po wdrożeniu",
     how4d: "Po zakończeniu projektu możesz wrócić po dalsze zmiany lub wsparcie techniczne.",
+
     // Trust
     trustTitle: "Kilka słów",
     trustHighlight: "o mnie",
-    trustP1: "Zajmuję się technologią dla firm — od sieci i monitoringu, przez wewnętrzne narzędzia, po strony internetowe. Moim celem jest dostarczanie rozwiązań, które rzeczywiście działają i wspierają codzienną pracę.",
-    trustP2: "Stawiam na prostotę, użyteczność i stabilność. Nie proponuję więcej niż potrzeba — ale to, co dostarczam, ma działać pewnie i być zrozumiałe dla każdego, kto z tego korzysta.",
-    trustP3: "Jeśli szukasz kogoś, kto podejdzie do Twojego problemu konkretnie i bez zbędnych komplikacji — zapraszam do kontaktu.",
+    trustP1: "Zajmuję się technologią dla firm - od sieci i monitoringu, przez wewnętrzne narzędzia, po strony internetowe. Moim celem jest dostarczanie rozwiązań, które rzeczywiście działają i wspierają codzienną pracę.",
+    trustP2: "Stawiam na prostotę, użyteczność i stabilność. Nie proponuję więcej niż potrzeba - ale to, co dostarczam, ma działać pewnie i być zrozumiałe dla każdego, kto z tego korzysta.",
+    trustP3: "Jeśli szukasz kogoś, kto podejdzie do Twojego problemu konkretnie i bez zbędnych komplikacji - zapraszam do kontaktu.",
     trustCta: "Skontaktuj się ze mną",
+
     // Contact
     contactTitle: "Porozmawiajmy o",
     contactHighlight: "Twoim projekcie",
@@ -88,9 +94,13 @@ const translations = {
     contactMessagePh: "Opisz krótko, czego potrzebujesz...",
     contactSend: "Wyślij wiadomość",
     contactOr: "lub skontaktuj się bezpośrednio",
+
     // Footer
-    footerRights: "© {year} Net Solution",
+    footerRights: "© {year} Net Solution. Wszelkie prawa zastrzeżone.",
+    privacyPolicy: "Polityka prywatności",
+    terms: "Regulamin",
   },
+
   en: {
     navServices: "Services",
     navHow: "How I Work",
@@ -152,9 +162,9 @@ const translations = {
     how4d: "After the project is done, you can come back for further changes or technical support.",
     trustTitle: "A few words",
     trustHighlight: "about me",
-    trustP1: "I work with technology for businesses — from networks and monitoring, through internal tools, to websites. My goal is to deliver solutions that actually work and support daily operations.",
-    trustP2: "I value simplicity, usability, and stability. I don't propose more than needed — but what I deliver should work reliably and be understandable for everyone who uses it.",
-    trustP3: "If you're looking for someone who will approach your problem concretely and without unnecessary complications — feel free to reach out.",
+    trustP1: "I work with technology for businesses - from networks and monitoring, through internal tools, to websites. My goal is to deliver solutions that actually work and support daily operations.",
+    trustP2: "I value simplicity, usability, and stability. I don't propose more than needed - but what I deliver should work reliably and be understandable for everyone who uses it.",
+    trustP3: "If you're looking for someone who will approach your problem concretely and without unnecessary complications - feel free to reach out.",
     trustCta: "Get in Touch",
     contactTitle: "Let's talk about",
     contactHighlight: "your project",
@@ -169,7 +179,11 @@ const translations = {
     contactMessagePh: "Briefly describe what you need...",
     contactSend: "Send message",
     contactOr: "or contact directly",
-    footerRights: "© {year} Net Solution",
+
+    // Footer
+    footerRights: "© {year} Net Solution. All rights reserved.",
+    privacyPolicy: "Privacy Policy",
+    terms: "Terms of Service",
   },
 } as const;
 

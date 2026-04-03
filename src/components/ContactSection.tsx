@@ -118,23 +118,11 @@ export const ContactSection = () => {
             </div>
             <div className="flex-1">
               <div className="text-xs text-muted-foreground">Email</div>
-              <div className="font-display font-medium text-foreground text-sm">kontakt@netsolution.pl</div>
+              <div className="font-display font-medium text-foreground text-sm">netowrk.soultion@gmail.com</div>
             </div>
             <ArrowRight size={16} className="text-muted-foreground group-hover:text-primary transition-colors" />
           </a>
-          <a
-            href="tel:+48000000000"
-            className="glass-card flex items-center gap-4 group hover:border-primary/40 transition-all"
-          >
-            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-              <Phone size={18} />
-            </div>
-            <div className="flex-1">
-              <div className="text-xs text-muted-foreground">{t.contactPhone}</div>
-              <div className="font-display font-medium text-foreground text-sm">+48 000 000 000</div>
-            </div>
-            <ArrowRight size={16} className="text-muted-foreground group-hover:text-primary transition-colors" />
-          </a>
+          
         </motion.div>
       </div>
     </section>

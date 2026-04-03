@@ -34,9 +34,11 @@ export const Navbar = () => {
     >
       <div className="container mx-auto flex items-center justify-between">
         <a href="#" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-            <span className="text-primary-foreground font-display font-bold text-sm">NS</span>
-          </div>
+        <img
+  src="/net-solutionweb/NetSolLogo.png"
+  alt="Net Solution logo"
+  className="h-8 w-auto object-contain"
+ />
           <span className="font-display font-semibold text-lg text-foreground">
             Net Solution
           </span>
