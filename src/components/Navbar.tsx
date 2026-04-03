@@ -35,7 +35,7 @@ export const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between">
         <a href="#" className="flex items-center gap-2">
         <img
-  src="/net-solutionweb/NetSolLogo.png"
+  src={`${import.meta.env.BASE_URL}NetSolLogo.png`}
   alt="Net Solution logo"
   className="h-8 w-auto object-contain"
  />

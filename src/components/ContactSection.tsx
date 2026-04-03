@@ -1,22 +1,65 @@
 import { motion } from "framer-motion";
-import { Mail, Phone, ArrowRight, Send } from "lucide-react";
+import { Mail, ArrowRight, Send } from "lucide-react";
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mgopnpbk";
+
 export const ContactSection = () => {
   const { t } = useLanguage();
-  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Build mailto link as fallback
-    const subject = encodeURIComponent(`Wiadomość od ${form.name}`);
-    const body = encodeURIComponent(`Imię: ${form.name}\nEmail: ${form.email}\nTelefon: ${form.phone}\n\n${form.message}`);
-    window.location.href = `mailto:kontakt@netsolution.pl?subject=${subject}&body=${body}`;
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          message: form.message,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Form submission failed");
+      }
+
+      setSubmitStatus("success");
+      setForm({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+    } catch (error) {
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -30,7 +73,9 @@ export const ContactSection = () => {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
-            {t.contactTitle}<br /><span className="text-gradient">{t.contactHighlight}</span>
+            {t.contactTitle}
+            <br />
+            <span className="text-gradient">{t.contactHighlight}</span>
           </h2>
           <p className="text-muted-foreground">{t.contactSub}</p>
         </motion.div>
@@ -45,7 +90,9 @@ export const ContactSection = () => {
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-sm text-muted-foreground mb-1.5 block">{t.contactName}</label>
+              <label className="text-sm text-muted-foreground mb-1.5 block">
+                {t.contactName}
+              </label>
               <input
                 type="text"
                 name="name"
@@ -56,8 +103,11 @@ export const ContactSection = () => {
                 className="w-full px-4 py-3 rounded-xl bg-background/50 border border-border/50 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 transition-all text-sm"
               />
             </div>
+
             <div>
-              <label className="text-sm text-muted-foreground mb-1.5 block">{t.contactEmail}</label>
+              <label className="text-sm text-muted-foreground mb-1.5 block">
+                {t.contactEmail}
+              </label>
               <input
                 type="email"
                 name="email"
@@ -69,8 +119,11 @@ export const ContactSection = () => {
               />
             </div>
           </div>
+
           <div>
-            <label className="text-sm text-muted-foreground mb-1.5 block">{t.contactPhone}</label>
+            <label className="text-sm text-muted-foreground mb-1.5 block">
+              {t.contactPhone}
+            </label>
             <input
               type="tel"
               name="phone"
@@ -80,8 +133,11 @@ export const ContactSection = () => {
               className="w-full px-4 py-3 rounded-xl bg-background/50 border border-border/50 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 transition-all text-sm"
             />
           </div>
+
           <div>
-            <label className="text-sm text-muted-foreground mb-1.5 block">{t.contactMessage}</label>
+            <label className="text-sm text-muted-foreground mb-1.5 block">
+              {t.contactMessage}
+            </label>
             <textarea
               name="message"
               value={form.message}
@@ -92,13 +148,27 @@ export const ContactSection = () => {
               className="w-full px-4 py-3 rounded-xl bg-background/50 border border-border/50 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 transition-all text-sm resize-none"
             />
           </div>
+
           <button
             type="submit"
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-primary to-accent text-primary-foreground font-medium flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
+            disabled={isSubmitting}
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-primary to-accent text-primary-foreground font-medium flex items-center justify-center gap-2 hover:opacity-90 transition-opacity disabled:opacity-60"
           >
             <Send size={16} />
-            {t.contactSend}
+            {isSubmitting ? "Wysyłanie..." : t.contactSend}
           </button>
+
+          {submitStatus === "success" && (
+            <p className="text-sm text-center text-green-400">
+              Wiadomość została wysłana.
+            </p>
+          )}
+
+          {submitStatus === "error" && (
+            <p className="text-sm text-center text-red-400">
+              Nie udało się wysłać formularza. Spróbuj ponownie.
+            </p>
+          )}
         </motion.form>
 
         <motion.div
@@ -108,9 +178,12 @@ export const ContactSection = () => {
           transition={{ delay: 0.2 }}
           className="space-y-3"
         >
-          <p className="text-center text-xs text-muted-foreground mb-3">{t.contactOr}</p>
+          <p className="text-center text-xs text-muted-foreground mb-3">
+            {t.contactOr}
+          </p>
+
           <a
-            href="mailto:kontakt@netsolution.pl"
+            href="mailto:netowrk.soultion@gmail.com"
             className="glass-card flex items-center gap-4 group hover:border-primary/40 transition-all"
           >
             <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
@@ -118,14 +191,17 @@ export const ContactSection = () => {
             </div>
             <div className="flex-1">
               <div className="text-xs text-muted-foreground">Email</div>
-              <div className="font-display font-medium text-foreground text-sm">netowrk.soultion@gmail.com</div>
+              <div className="font-display font-medium text-foreground text-sm">
+              netowrk.soultion@gmail.com
+              </div>
             </div>
-            <ArrowRight size={16} className="text-muted-foreground group-hover:text-primary transition-colors" />
+            <ArrowRight
+              size={16}
+              className="text-muted-foreground group-hover:text-primary transition-colors"
+            />
           </a>
         </motion.div>
       </div>
     </section>
   );
 };
-
-
