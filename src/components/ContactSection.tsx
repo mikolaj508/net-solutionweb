@@ -122,7 +122,6 @@ export const ContactSection = () => {
             </div>
             <ArrowRight size={16} className="text-muted-foreground group-hover:text-primary transition-colors" />
           </a>
-          
         </motion.div>
       </div>
     </section>
